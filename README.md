@@ -1,0 +1,2 @@
+# LabDiscreteMath
+Lab discrete math
