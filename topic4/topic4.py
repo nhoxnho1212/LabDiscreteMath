@@ -112,13 +112,19 @@ def calExpression(Expression):
         
 
     DataWriter={}
+    count_TruthConstant=0
     for i in range(len(Truth_Table_Variable)):
         DataWriter.update({list_variable_appeared[i] : Truth_Table_Variable[i]})
+        if (temp_exp[0][i]==True):
+            count_TruthConstant+=1
     DataWriter.update({Expression:temp_exp[0]})
     df=pd.DataFrame(DataWriter)
     df.to_excel('result.xlsx',sheet_name='sheet 1')
+
+    with open('countTruthConstant.txt','w') as fw:
+        fw.write(str(count_TruthConstant))
     
-    return 0
+    
 if __name__ == "__main__":
     exp=ReadFileInput('input.txt')
     calExpression(exp)
