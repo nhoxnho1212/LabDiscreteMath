@@ -43,7 +43,7 @@ def cal(oparetor,a):
     if oparetor=='¬':
         return Negative(a[0])
     elif oparetor == 'Λ' :
-        return Conditional(a[0],a[1])
+        return Conjunction(a[0],a[1])
     elif oparetor == 'V' :
         return Disjunction(a[0],a[1])
     elif oparetor == '→' :
@@ -57,7 +57,7 @@ def calExpression(Expression):
     Truth_Table_Variable=list()
 
     for l in Expression:
-        if l.isalpha() and l!='V':
+        if (l.isalpha() and l!='V')and l!='Λ':
             if (l not in list_variable_appeared):
                 list_variable_appeared.append(l)
     
@@ -79,7 +79,6 @@ def calExpression(Expression):
     temp_exp=list()
     temp_oper=''
     Stack_exp=list()
-    check=False
     for l in Expression:
         if l in list_variable_appeared:
             if temp_oper=='':
@@ -104,7 +103,10 @@ def calExpression(Expression):
             if len(temp_exp)!=0:
                 prev_exp=Stack_exp[-1].x
                 prev_oper=Stack_exp[-1].y
-                cur_cal=(prev_exp[0],temp_exp[0])
+                if prev_exp.size!=0:
+                    cur_cal=(prev_exp[0],temp_exp[0])
+                else:
+                    cur_cal=temp_exp
                 temp_exp[0]=cal(prev_oper,cur_cal)
                 Stack_exp.pop()
         
